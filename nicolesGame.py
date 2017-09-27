@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 
 pygame.init()
 
@@ -51,14 +52,14 @@ def game_loop():
                     x_change = 0
                 if event.key in (pygame.K_UP, pygame.K_DOWN):
                     y_change = 0
-
+           
         x += x_change
         y += y_change
         gameDisplay.fill(white)
         bunny(x, y + y_change)
         if x > display_width - bunny_width or x < 0:
             finished = True
-
+        
         pygame.display.update()
         clock.tick(60)
 

@@ -61,7 +61,7 @@ def game_loop():
             finished = True
         
         pygame.display.update()
-        clock.tick(60)
+        clock.tick(120)
 
 game_loop()
 pygame.quit()

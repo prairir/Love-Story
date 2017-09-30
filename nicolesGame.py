@@ -39,13 +39,13 @@ def game_loop():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    x_change = -4
+                    x_change = -3
                 elif event.key == pygame.K_RIGHT:
-                    x_change = 4
+                    x_change = 3
                 if event.key == pygame.K_UP:
-                    y_change = -4
+                    y_change = -3
                 elif event.key == pygame.K_DOWN:
-                    y_change = 4
+                    y_change = 3
 
             if event.type == pygame.KEYUP:
                 if event.key in (pygame.K_LEFT, pygame.K_RIGHT): 

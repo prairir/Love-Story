@@ -13,7 +13,7 @@ surface = pygame.Surface(screen.get_size())
 
 pygame.display.set_caption('basic box prototype')
 boxImg = pygame.image.load('data/images/box.png')
-
+bunnyImg = pygame.image.load('data/images/bunny.png')
 pygame.key.set_repeat(1, 40) #checks the keys press (delay, interval)
 
 class Box(object):
@@ -23,8 +23,8 @@ class Box(object):
     def __init__(self):
         """TODO: 
             movement with the bunny if they are touching. 
-            check if touchs bunny
-            check if touchs goal
+            check if touches bunny
+            check if touches goal
             """
         self.posX = 0
         self.posY = 60
@@ -34,17 +34,21 @@ class Box(object):
 
 class Nicole(object):
 
-    """Docstring for Nicole. """
+    """The player for the game. """
 
     def __init__(self):
-        """TODO: to be defined1. """
+        """TODO: 
+        movement
+        check to touch the box
+        check when get to goal
+        """
         
 class Goal(object):
 
-    """Docstring for Goal. """
+    """the object to get the boxes to the goal. """
 
     def __init__(self):
-        """TODO: to be defined1. """
+        """TODO: check if the box touches it. """
         
 if __name__ == "__main__":
     box = Box()

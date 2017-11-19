@@ -16,6 +16,12 @@ pygame.display.set_caption('grilled cheese game')
 topImg = pygame.image.load('data/images/topCheese.png')
 bottomImg = pygame.image.load('data/images/bottomCheese.png')
 
+pygame.font.init()
+myfont = pygame.font.SysFont('Arial', 30)
+wintext = myfont.render('Congrats, You Made The Grilled Cheese', False, (0,0,0))
+playtext = myfont.render('Make The Grilled Cheese', False, (0,0,0))
+losetext = myfont.render('Sorry You Didnt Make The Grilled Cheese', False, (0,0,0))
+
 class Top(pygame.sprite.Sprite):
 
     """Docstring for Top. """
@@ -67,6 +73,7 @@ if __name__ == "__main__":
     y = 0
     x = 0
     x_change = 0
+    lose = False
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -88,9 +95,14 @@ if __name__ == "__main__":
         bottom.draw()
         top.draw(x , y)
         touching = bottom.collidewith(top)
-        if touching:
-            pass
-        else: 
+        if (top.y + y) > display_height:
+            lose = True
+        if not touching and not lose:
+            screen.blit(playtext, (0,0))
             y +=1
+        elif lose:
+            screen.blit(losetext, (0,0))
+        else:
+            screen.blit(wintext, (0,0))
         pygame.display.update()
         clock.tick(120)

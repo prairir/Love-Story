@@ -1,5 +1,4 @@
 import sys
-import time
 import pygame
 
 from pygame.locals import *
@@ -14,6 +13,7 @@ surface = pygame.Surface(screen.get_size())
 pygame.display.set_caption('basic box prototype')
 boxImg = pygame.image.load('data/images/box.png')
 bunnyImg = pygame.image.load('data/images/bunny.png')
+goalImg = pygame.image.load('data/images/goal.png')
 pygame.key.set_repeat(1, 40) #checks the keys press (delay, interval)
 
 class Box(object):
@@ -28,31 +28,54 @@ class Box(object):
             """
         self.posX = 0
         self.posY = 60
+        self.image = boxImg
+        self.rect = self.image.get_rect()
 
     def draw(self, x, y):
         screen.blit(boxImg, (self.posX + x, self.posY + y))
 
-class Nicole(object):
+    def safeToMove(self):
+        return self.rect.colliderect(bunny)# and not self.rect.colliderect(goal)
+
+class Bunny(object):
 
     """The player for the game. """
 
     def __init__(self):
-        """TODO: 
+        """TODO:
         movement
         check to touch the box
         check when get to goal
         """
-        
+        self.posX = 0
+        self.posY = display_height - 75
+        self.image = bunnyImg
+        self.rect = self.image.get_rect()
+
+    def draw(self, x, y):
+        screen.blit(bunnyImg, (self.posX + x, self.posY + y))
+
 class Goal(object):
 
     """the object to get the boxes to the goal. """
 
     def __init__(self):
         """TODO: check if the box touches it. """
+        self.x = 0
+        self.y = 0
+        self.image = goalImg
+        #self.rect = self.image.rect()
         
 if __name__ == "__main__":
     box = Box()
     box.draw(0, 0)
+    bunny = Bunny()
+    bunny.draw(0, 0)
+    goal = Goal()
+    if box.safeToMove:
+        print("hello")
+    else:
+        print("bye")
     while True:
 
         for event in pygame.event.get():
@@ -61,3 +84,4 @@ if __name__ == "__main__":
                 sys.exit()
         pygame.display.update()
         clock.tick(120)
+    

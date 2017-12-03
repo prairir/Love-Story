@@ -24,10 +24,10 @@ losetext = myfont.render('Sorry You Didnt Make The Grilled Cheese', False, (0,0,
 
 class Top(pygame.sprite.Sprite):
 
-    """Docstring for Top. """
+    """The Top Piece for the grilled cheese that falls and can be controlled. """
 
     def __init__(self):
-        """TODO: to be defined1. """
+        
 
         self.y = 0
         self.x = display_height / 2
@@ -46,11 +46,10 @@ class Top(pygame.sprite.Sprite):
 
 class Bottom(pygame.sprite.Sprite):
 
-    """Docstring for Bottom. """
+    """The Bottom Piece for the grilled Cheese that stays still. """
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        """TODO: to be defined1. """
         self.y = display_height - 100
         self.x = display_height / 2
         self.image = bottomImg

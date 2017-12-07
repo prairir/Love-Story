@@ -26,16 +26,23 @@ class Box(object):
             check if touches bunny
             check if touches goal
             """
-        self.posX = 0
-        self.posY = 60
+        self.x = 0
+        self.y = 60
         self.image = boxImg
-        self.rect = self.image.get_rect()
+        self.rect = 0
+        self.height = self.image.get_height()
+        self.width = self.image.get_width()
+        self.topx = 0
+        self.topy = 0
 
     def draw(self, x, y):
-        screen.blit(boxImg, (self.posX + x, self.posY + y))
+        screen.blit(boxImg, (self.x + x, self.y + y))
+        self.topx = ((self.x + x) - (self.width / 2) + 1)
+        self.topy = ((self.y + y) - (self.height / 2) + 20)
+        self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
 
-    def safeToMove(self):
-        return self.rect.colliderect(bunny)# and not self.rect.colliderect(goal)
+    def collidewith(self, ob):
+        return self.rect.colliderect(ob)
 
 class Bunny(object):
 
@@ -47,14 +54,20 @@ class Bunny(object):
         check to touch the box
         check when get to goal
         """
-        self.posX = 0
-        self.posY = display_height - 75
+        self.x = 0
+        self.y = display_height - 75
         self.image = bunnyImg
-        self.rect = self.image.get_rect()
+        self.rect = 0
+        self.height = self.image.get_height()
+        self.width = self.image.get_width()
+        self.topx = 0
+        self.topy = 0
 
     def draw(self, x, y):
-        screen.blit(bunnyImg, (self.posX + x, self.posY + y))
-
+        screen.blit(bunnyImg, (self.x + x, self.y + y))
+        self.topx = ((self.x + x) - (self.width / 2) + 1)
+        self.topy = ((self.y + y) - (self.height / 2) + 1)
+        self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
 class Goal(object):
 
     """the object to get the boxes to the goal. """
@@ -72,7 +85,7 @@ if __name__ == "__main__":
     bunny = Bunny()
     bunny.draw(0, 0)
     goal = Goal()
-    if box.safeToMove:
+    if box.collidewith:
         print("hello")
     else:
         print("bye")

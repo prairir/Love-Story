@@ -1,6 +1,5 @@
 import sys
 import pygame
-
 from pygame.locals import *
 
 pygame.init()
@@ -42,7 +41,9 @@ class Box(object):
 
     def collidewith(self, ob):
         return self.rect.colliderect(ob)
-
+    
+    def okToMove(self, obb, obg):
+        return self.collidewith(obb) and not self.collidewith(obg)
 class Bunny(object):
 
     """The player for the game. """
@@ -66,23 +67,28 @@ class Bunny(object):
         self.topx = ((self.x + x) - (self.width / 2) + 1)
         self.topy = ((self.y + y) - (self.height / 2) + 1)
         self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
+
 class Goal(object):
 
     """the object to get the boxes to the goal. """
 
     def __init__(self):
         """TODO: check if the box touches it. """
-        self.x = 0
-        self.y = 0
+        self.x = display_width - 75
+        self.y = display_height - 70
         self.image = goalImg
-        #self.rect = self.image.rect()
+        self.rect = 0
+        self.height = self.image.get_height()
+        self.width = self.image.get_width()
+        self.topx = (self.x - (self.width / 2))
+        self.topy = (self.y - (self.height / 2))
+
+    def draw(self):
+        screen.blit(goalImg, (self.x, self.y))
+        self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
 
 
-
-if __name__ == "__main__":
-    def okToMove():
-        return box.collidewith(bunny)
-
+def main():
     box = Box()
     bunny = Bunny()
     goal = Goal()
@@ -99,19 +105,19 @@ if __name__ == "__main__":
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     x_change = 3
-                    if okToMove():
+                    if box.okToMove(bunny, goal):
                         x_change_box = 3
                 elif event.key == pygame.K_LEFT:
                     x_change = -3
-                    if okToMove():
+                    if box.okToMove(bunny, goal):
                         x_change_box = -3
                 if event.key == pygame.K_UP:
                     y_change = -3
-                    if okToMove():
+                    if box.okToMove(bunny, goal):
                         y_change_box = -3
                 elif event.key == pygame.K_DOWN:
                     y_change = 3
-                    if okToMove():
+                    if box.okToMove(bunny, goal):
                         y_change_box = 3
                 
             elif event.type == pygame.KEYUP:
@@ -129,6 +135,9 @@ if __name__ == "__main__":
         yBox += y_change_box
         bunny.draw(x, y)
         box.draw(xBox,yBox)
+        goal.draw()
         pygame.display.update()
         clock.tick(120)
     
+if __name__ == "__main__":
+    main()

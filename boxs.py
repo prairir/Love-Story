@@ -24,8 +24,8 @@ class Box(object):
         """TODO: 
             check if touches goal
             """
-        self.x = 0
-        self.y = 60
+        self.x = 40
+        self.y = display_height - 140 
         self.image = boxImg
         self.rect = 0
         self.height = self.image.get_height()
@@ -68,6 +68,8 @@ class Bunny(object):
         self.topy = ((self.y + y) - (self.height / 2) + 1)
         self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
 
+    def collidewith(self, ob):
+        return self.rect.colliderect(ob)
 class Goal(object):
 
     """the object to get the boxes to the goal. """
@@ -96,6 +98,9 @@ def main():
     xBox, yBox = 0, 0
     x_change, y_change = 0 ,0 
     x_change_box, y_change_box = 0, 0
+    score = 0
+    iterator = 0
+    boxes = [False, False, False, False, False]
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -127,7 +132,6 @@ def main():
                 if event.key in (pygame.K_UP, pygame.K_DOWN):
                     y_change = 0
                     y_change_box = 0
-
         screen.fill(white)
         x += x_change
         y += y_change
@@ -136,6 +140,14 @@ def main():
         bunny.draw(x, y)
         box.draw(xBox,yBox)
         goal.draw()
+        if box.collidewith(bunny) and box.collidewith(goal):
+            boxes[iterator] = True
+        if boxes[iterator]:
+            score += 1
+            xBox = 0
+            yBox = 0
+            iterator +=1
+            print(iterator,  boxes)
         pygame.display.update()
         clock.tick(120)
     

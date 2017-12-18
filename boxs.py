@@ -24,8 +24,8 @@ class Box(object):
         """TODO: 
             check if touches goal
             """
-        self.x = 40
-        self.y = display_height - 140 
+        self.x = 60
+        self.y = display_height - 170 
         self.image = boxImg
         self.rect = 0
         self.height = self.image.get_height()
@@ -77,7 +77,7 @@ class Goal(object):
     def __init__(self):
         """TODO: check if the box touches it. """
         self.x = display_width - 75
-        self.y = display_height - 100
+        self.y = display_height - 120
         self.image = goalImg
         self.rect = 0
         self.height = self.image.get_height()
@@ -100,6 +100,7 @@ def main():
     x_change_box, y_change_box = 0, 0
     score = 0
     iterator = 0
+    finished = False
     boxes = [False, False, False, False, False]
     while True:
         for event in pygame.event.get():
@@ -108,19 +109,19 @@ def main():
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT and not finished:
                     x_change = 3
                     if box.okToMove(bunny, goal):
                         x_change_box = 3
-                elif event.key == pygame.K_LEFT:
+                elif event.key == pygame.K_LEFT and not finished:
                     x_change = -3
                     if box.okToMove(bunny, goal):
                         x_change_box = -3
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_UP and not finished:
                     y_change = -3
                     if box.okToMove(bunny, goal):
                         y_change_box = -3
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_DOWN and not finished:
                     y_change = 3
                     if box.okToMove(bunny, goal):
                         y_change_box = 3
@@ -142,7 +143,9 @@ def main():
         goal.draw()
         if box.collidewith(bunny) and box.collidewith(goal):
             boxes[iterator] = True
-        if boxes[iterator]:
+        if boxes[4]:
+            finished = True
+        elif boxes[iterator]:
             score += 1
             xBox = 0
             yBox = 0

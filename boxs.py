@@ -75,7 +75,7 @@ class Goal(object):
     def __init__(self):
         """TODO: check if the box touches it. """
         self.x = display_width - 75
-        self.y = display_height - 70
+        self.y = display_height - 100
         self.image = goalImg
         self.rect = 0
         self.height = self.image.get_height()

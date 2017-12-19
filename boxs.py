@@ -25,9 +25,6 @@ class Box(object):
     """The Box object for a box moving game"""
 
     def __init__(self):
-        """TODO: 
-            check if touches goal
-            """
         self.x = 60
         self.y = display_height - 170 
         self.image = boxImg
@@ -53,10 +50,6 @@ class Bunny(object):
     """The player for the game. """
 
     def __init__(self):
-        """TODO:
-        movement
-        check when get to goal
-        """
         self.x = 0
         self.y = display_height - 75
         self.image = bunnyImg
@@ -79,7 +72,6 @@ class Goal(object):
     """the object to get the boxes to the goal. """
 
     def __init__(self):
-        """TODO: check if the box touches it. """
         self.x = display_width - 75
         self.y = display_height - 120
         self.image = goalImg

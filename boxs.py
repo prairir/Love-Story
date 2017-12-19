@@ -16,6 +16,10 @@ bunnyImg = pygame.image.load('data/images/bunny.png')
 goalImg = pygame.image.load('data/images/goal.png')
 pygame.key.set_repeat(1, 40) #checks the keys press (delay, interval)
 
+pygame.font.init()
+myfont = pygame.font.SysFont('Arial', 30)
+wintext = myfont.render('Congrats, You Stocked Everything', False, (0,0,0))
+playtext = myfont.render('Stock Everything', False,(0,0,0))
 class Box(object):
 
     """The Box object for a box moving game"""
@@ -64,7 +68,7 @@ class Bunny(object):
 
     def draw(self, x, y):
         screen.blit(bunnyImg, (self.x + x, self.y + y))
-        self.topx = ((self.x + x) - (self.width / 2) + 1)
+        self.topx = ((self.x + x) - (self.width / 2) - 10)
         self.topy = ((self.y + y) - (self.height / 2) + 1)
         self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
 
@@ -102,6 +106,9 @@ def main():
     iterator = 0
     finished = False
     boxes = [False, False, False, False, False]
+    timerS = 0
+    timerM = 0
+    timerMM = 0
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -144,6 +151,7 @@ def main():
         if box.collidewith(bunny) and box.collidewith(goal):
             boxes[iterator] = True
         if boxes[4]:
+            screen.blit(wintext, ((display_width / 2) - 200,40))
             finished = True
         elif boxes[iterator]:
             score += 1
@@ -151,6 +159,17 @@ def main():
             yBox = 0
             iterator +=1
             print(iterator,  boxes)
+        else:
+            screen.blit(playtext, ((display_width / 2) - 95,40))
+        timerMM += clock.get_time()
+        if timerMM >= 1000 and not finished:
+            timerMM -= 1000
+            timerS +=1
+        if timerS >= 60:
+            timerM +=1
+            timerS - 60
+        timertext = myfont.render("{0:02}:{1:02}.{2:02}".format(timerM,timerS, timerMM), False, (0,0,0))
+        screen.blit(timertext, (display_width / 2, 0))
         pygame.display.update()
         clock.tick(120)
     

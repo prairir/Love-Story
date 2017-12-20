@@ -27,8 +27,6 @@ class Top(pygame.sprite.Sprite):
     """The Top Piece for the grilled cheese that falls and can be controlled. """
 
     def __init__(self):
-        
-
         self.y = 0
         self.x = display_height / 2
         self.image = topImg

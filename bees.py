@@ -1,7 +1,6 @@
 import sys
 import pygame
-from pygame.locals import *
-
+from pygame.locals import * 
 pygame.init()
 clock = pygame.time.Clock()
 
@@ -46,6 +45,9 @@ class Honey(object):
     def collidewith(self, ob):
         return self.rect.colliderect(ob)
 
+    def oktomove(self, ob1, ob2):
+        return self.collidewith(ob1) and not self.collidewith(ob2)
+
 class Bunny(object):
 
     """Docstring for Bunny. """
@@ -59,7 +61,7 @@ class Bunny(object):
         self.image = bunnyImg
         self.rect = 0
         self.height = self.image.get_height()
-        self.width = self.images.get_width()
+        self.width = self.image.get_width()
         self.topx = 0
         self.topy = 0
 
@@ -78,17 +80,90 @@ class Goal(object):
 
     def __init__(self):
         """TODO: check if honey gets to goal. """
-        self.x = 50
+        self.x = 0
         self.y = display_height / 2
         self.image = goalImg
-        self.rect = 0
         self.height = self.image.get_height()
-        self.width = self.images.get_width()
-        self.topx = 0
-        self.topy = 0
-
-    def draw(self):
-        screen.blit(bunnyImg, (self.x, self.y))
+        self.width = self.image.get_width()
         self.topx = ((self.x) - (self.width / 2) + 1)
         self.topy = ((self.y) - (self.height / 2) + 1)
         self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
+
+    def draw(self):
+        screen.blit(goalImg, (self.x, self.y))
+
+
+class Bee(object):
+
+    """Docstring for Bee. """
+
+    def __init__(self):
+        """TODO: to be defined1. """
+        self.x = 0
+        self.y = 0
+        self.image = beeImg
+        self.height = self.image.get_height()
+        self.width = self.image.get_width()
+
+    def draw(self):
+        screen.blit(beeImg, (self.x, self.y))
+        self.topx = ((self.x) - (self.width / 2) + 1)
+        self.topy = ((self.y) - (self.height / 2) + 1)
+        self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
+
+def main():
+    honey = Honey()
+    bunny = Bunny()
+    goal = Goal()
+    bee = Bee()
+    x, y = 0, 0
+    xHon, yHon = 0,0
+    x_change = 0
+    y_change = 0
+    x_change_Honey, y_change_Honey = 0, 0
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    x_change = 3
+                    if honey.oktomove(bunny, goal):
+                        x_change_Honey = 3
+                elif event.key == pygame.K_LEFT:
+                    x_change = -3
+                    if honey.oktomove(bunny, goal):
+                        x_change_Honey = -3
+                if event.key == pygame.K_UP:
+                    y_change = -3
+                    if honey.oktomove(bunny, goal):
+                        y_change_Honey = -3
+                elif event.key == pygame.K_DOWN:
+                    y_change = 3
+                    if honey.oktomove(bunny, goal):
+                        y_change_Honey = 3
+
+            elif event.type == pygame.KEYUP:
+                if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
+                    x_change = 0
+                    x_change_Honey = 0
+                if event.key in (pygame.K_DOWN, pygame.K_UP):
+                    y_change = 0
+                    y_change_Honey = 0
+
+        screen.fill(white)
+        x += x_change
+        y += y_change
+        xHon += x_change_Honey
+        yHon += y_change_Honey
+        bunny.draw(x,y)
+        honey.draw(xHon,yHon)
+        bee.draw()
+        goal.draw()
+        pygame.display.update()
+        clock.tick(120)
+
+if __name__ == "__main__":
+    main()

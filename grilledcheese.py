@@ -64,7 +64,7 @@ class Bottom(pygame.sprite.Sprite):
     def collidewith(self, ob):
         return self.rect.colliderect(ob)
 
-if __name__ == "__main__":
+def main():
     bottom = Bottom()
     top = Top()
     y = 0
@@ -101,5 +101,9 @@ if __name__ == "__main__":
             screen.blit(losetext, (0,0))
         else:
             screen.blit(wintext, (0,0))
+            break
         pygame.display.update()
         clock.tick(120)
+    return True
+if __name__ == "__main__":
+   print(main())

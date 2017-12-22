@@ -145,12 +145,12 @@ def main():
         if boxes[4]:
             screen.blit(wintext, ((display_width / 2) - 200,40))
             finished = True
+            break
         elif boxes[iterator]:
             score += 1
             xBox = 0
             yBox = 0
             iterator +=1
-            print(iterator,  boxes)
         else:
             screen.blit(playtext, ((display_width / 2) - 95,40))
         timerMM += clock.get_time()
@@ -164,6 +164,6 @@ def main():
         screen.blit(timertext, (display_width / 2, 0))
         pygame.display.update()
         clock.tick(120)
-    
+    return True
 if __name__ == "__main__":
-    main()
+    print(main())

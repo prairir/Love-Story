@@ -21,6 +21,10 @@ honeyImg = pygame.image.load('data/images/honey.png')
 goalImg = pygame.image.load('data/images/goal.png')
 pygame.key.set_repeat(1,40)
 
+pygame.font.init()
+myfont = pygame.font.SysFont('Arial', 30)
+wintext = myfont.render('Congrats, You Got The Honey', False, (0,0,0))
+playtext = myfont.render('Get The Honey Without Touching Bees', False, (0,0,0))
 class Honey(object):
 
     """Docstring for Honey. """
@@ -133,6 +137,7 @@ def main():
     x_change = 0
     y_change = 0
     x_change_Honey, y_change_Honey = 0, 0
+    finished = False
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -140,19 +145,19 @@ def main():
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT and not finished:
                     x_change = 3
                     if honey.oktomove(bunny, goal):
                         x_change_Honey = 3
-                elif event.key == pygame.K_LEFT:
+                elif event.key == pygame.K_LEFT and not finished:
                     x_change = -3
                     if honey.oktomove(bunny, goal):
                         x_change_Honey = -3
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_UP and not finished:
                     y_change = -3
                     if honey.oktomove(bunny, goal):
                         y_change_Honey = -3
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_DOWN and not finished:
                     y_change = 3
                     if honey.oktomove(bunny, goal):
                         y_change_Honey = 3
@@ -182,8 +187,14 @@ def main():
         if bunny.collidewith(top1) or bunny.collidewith(top2) or bunny.collidewith(top3) or bunny.collidewith(top4) or bunny.collidewith(bottom1) or bunny.collidewith(bottom2):
             x = 0
             y = 0
+        if honey.collidewith(bunny) and honey.collidewith(goal):
+            finished = True
+            screen.blit(wintext,(0,0))
+            break
+        else:
+            screen.blit(playtext, (0,0))
         pygame.display.update()
         clock.tick(120)
-
+    return True
 if __name__ == "__main__":
-    main()
+    print(main())

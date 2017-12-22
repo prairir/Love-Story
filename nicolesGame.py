@@ -14,6 +14,7 @@ surface = pygame.Surface(screen.get_size())
 pygame.display.set_caption('N + R = <3')
 white = (255, 255, 255)
 
+cuddleImg = pygame.image.load('data/images/cuddle.png')
 bunnyImg = pygame.image.load('data/images/bunny.png')
 hedgeImg = pygame.image.load('data/images/hedgehog.png')
 goalImg = pygame.image.load('data/images/goal.png')
@@ -91,6 +92,18 @@ class Goal(object):
         self.topy = ((self.y) - (self.height / 2)+1)
         self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
 
+class Cuddle(object):
+
+    """Docstring for Cuddle. """
+
+    def __init__(self, x, y):
+        """TODO: to be defined1. """
+        self.x = x
+        self.y = y
+        self.image = cuddleImg
+        
+    def draw(self):
+        screen.blit(self.image, (self.x, self.y))
 
 def main():
     bunny = Bunny(5, display_height - 100)
@@ -98,6 +111,7 @@ def main():
     goal1 = Goal(display_width / 2, display_height - 80)
     goal2 = Goal(display_width / 2 - 100, display_height - 80)
     goal3 = Goal(display_width / 2 + 100, display_height - 80)
+    cuddle = Cuddle(display_width / 2 - 90 , display_height - 80)
     x, y = 0,0
     x_change, y_change = 0 ,0
     iterator = 0
@@ -229,13 +243,28 @@ def main():
                 bees.main()
                 x = 0
                 y = 0
+        
+        if iterator == 7:
+            bunny.draw(x, y)
+            goal2.draw()
+            goal3.draw()
+            hedge.draw()
+            screen.blit(myfont.render('Move To HedgeHog', False, (0,0,0)), (0,0))
+            if bunny.collidewith(goal2):
+                screen.blit(myfont.render('HedgeHog Will Be There By Her Side', False, (0,0,0)), (0,35))
+            if bunny.collidewith(goal3):
+                screen.blit(myfont.render('HedgeHod Will Always Love Bunny', False, (0,0,0)), (0,35))
+            if bunny.collidewith(hedge):
+                iterator +=1 
+                x = 0
+                y = 0
 
-                
-            
-
-                
-
-
+        if iterator == 8:
+            cuddle.draw()
+            screen.blit(myfont.render('Merry Christmas Bunny', False, (0,0,0)), (display_width /2 - 160,0))
+            screen.blit(myfont.render('I Love You To The Moon And The Stars', False, (0,0,0)), (65 ,35))
+            screen.blit(myfont.render('And Back', False, (0,0,0)), (display_width / 2 - 75 ,70))
+            screen.blit(myfont.render('Love Ryan', False, (0,0,0)), (display_width /2 - 80 ,105))
         pygame.display.update()
         clock.tick(120)
 

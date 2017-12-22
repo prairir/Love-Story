@@ -10,7 +10,12 @@ surface = pygame.Surface(screen.get_size())
 white = (255,255,255)
 
 pygame.display.set_caption('bee game')
-beeImg = pygame.image.load('data/images/bee.png')
+top1Img = pygame.image.load('data/images/top1.png')
+top2Img = pygame.image.load('data/images/top2.png')
+top3Img = pygame.image.load('data/images/top3.png')
+top4Img = pygame.image.load('data/images/top4.png')
+bottom1Img = pygame.image.load('data/images/bottom1.png')
+bottom2Img = pygame.image.load('data/images/bottom2.png')
 bunnyImg = pygame.image.load('data/images/bunny.png')
 honeyImg = pygame.image.load('data/images/honey.png')
 goalImg = pygame.image.load('data/images/goal.png')
@@ -27,7 +32,7 @@ class Honey(object):
             check movement  
             """
         self.x = display_width - 80
-        self.y = display_height / 2
+        self.y =   0
         self.image = honeyImg
         self.rect = 0 
         self.height = self.image.get_height()
@@ -38,8 +43,8 @@ class Honey(object):
 
     def draw(self, x, y):
         screen.blit(honeyImg, (self.x + x, self.y + y))
-        self.topx = ((self.x + x) - (self.width / 2) + 1)
-        self.topy = ((self.y + y) - (self.height / 2) + 1)
+        self.topx = ((self.x + x) - (self.width / 2) + 40)
+        self.topy = ((self.y + y) - (self.height / 2) - 10)
         self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
 
     def collidewith(self, ob):
@@ -72,7 +77,7 @@ class Bunny(object):
         self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
 
     def collidewith(self, ob):
-        return self.rect.collidewith(ob)
+        return self.rect.colliderect(ob)
 
 class Goal(object):
 
@@ -93,30 +98,125 @@ class Goal(object):
         screen.blit(goalImg, (self.x, self.y))
 
 
-class Bee(object):
+class Top1(object):
 
     """Docstring for Bee. """
 
     def __init__(self):
         """TODO: to be defined1. """
         self.x = 0
-        self.y = 0
-        self.image = beeImg
+        self.y = display_height / 2 - 80 
+        self.image = top1Img
         self.height = self.image.get_height()
         self.width = self.image.get_width()
 
     def draw(self):
-        screen.blit(beeImg, (self.x, self.y))
-        self.topx = ((self.x) - (self.width / 2) + 1)
-        self.topy = ((self.y) - (self.height / 2) + 1)
+        screen.blit(top1Img, (self.x, self.y))
+        self.topx = ((self.x) - (self.width / 2) + 100)
+        self.topy = ((self.y) - (self.height / 2) - 20)
+        self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
+
+class Top2(object):
+
+    """Docstring for Bee. """
+
+    def __init__(self):
+        """TODO: to be defined1. """
+        self.x = 290
+        self.y = display_height / 2 - 80 
+        self.image = top2Img
+        self.height = self.image.get_height()
+        self.width = self.image.get_width()
+
+    def draw(self):
+        screen.blit(top2Img, (self.x, self.y))
+        self.topx = ((self.x) - (self.width / 2))
+        self.topy = ((self.y) - (self.height / 2)) 
+        self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
+
+class Top3(object):
+
+    """Docstring for Bee. """
+
+    def __init__(self):
+        """TODO: to be defined1. """
+        self.x = 280
+        self.y = display_height / 2 - 9  
+        self.image = top3Img
+        self.height = self.image.get_height()
+        self.width = self.image.get_width()
+
+    def draw(self):
+        screen.blit(top3Img, (self.x, self.y))
+        self.topx = ((self.x) - (self.width / 2)+ 54)
+        self.topy = ((self.y) - (self.height / 2) - 20) 
+        self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
+
+class Top4(object):
+
+    """Docstring for Bee. """
+
+    def __init__(self):
+        """TODO: to be defined1. """
+        self.x = 424
+        self.y =  0 
+        self.image = top4Img
+        self.height = self.image.get_height()
+        self.width = self.image.get_width()
+
+    def draw(self):
+        screen.blit(top4Img, (self.x, self.y))
+        self.topx = ((self.x) - (self.width / 2) - 10)
+        self.topy = ((self.y) - (self.height / 2) + 60) 
+        self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
+
+class Bottom1(object):
+
+    """Docstring for Bee. """
+
+    def __init__(self):
+        """TODO: to be defined1. """
+        self.x = 0
+        self.y = display_height / 2 + 100
+        self.image = bottom1Img
+        self.height = self.image.get_height()
+        self.width = self.image.get_width()
+
+    def draw(self):
+        screen.blit(bottom1Img, (self.x, self.y))
+        self.topx = ((self.x) - (self.width / 2) + 65)
+        self.topy = ((self.y) - (self.height / 2) + 10)
+        self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
+
+class Bottom2(object):
+
+    """Docstring for Bee. """
+
+    def __init__(self):
+        """TODO: to be defined1. """
+        self.x = 135
+        self.y = display_height / 2 + 165
+        self.image = bottom2Img
+        self.height = self.image.get_height()
+        self.width = self.image.get_width()
+
+    def draw(self):
+        screen.blit(bottom2Img, (self.x, self.y))
+        self.topx = ((self.x) - (self.width / 2) + 155)
+        self.topy = ((self.y) - (self.height / 2) + 13)
         self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
 
 def main():
     honey = Honey()
     bunny = Bunny()
     goal = Goal()
-    bee = Bee()
-    x, y = 0, 0
+    bottom1 = Bottom1()
+    bottom2 = Bottom2()
+    top1 = Top1()
+    top2 = Top2()
+    top3 = Top3()
+    top4 = Top4()
+    x, y = 0,0
     xHon, yHon = 0,0
     x_change = 0
     y_change = 0
@@ -160,8 +260,16 @@ def main():
         yHon += y_change_Honey
         bunny.draw(x,y)
         honey.draw(xHon,yHon)
-        bee.draw()
+        top1.draw()
+        top2.draw()
+        top3.draw()
+        top4.draw()
+        bottom1.draw()
+        bottom2.draw()
         goal.draw()
+        if bunny.collidewith(top1) or bunny.collidewith(top2) or bunny.collidewith(top3) or bunny.collidewith(top4) or bunny.collidewith(bottom1) or bunny.collidewith(bottom2):
+            x = 0
+            y = 0
         pygame.display.update()
         clock.tick(120)
 

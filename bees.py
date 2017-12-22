@@ -206,16 +206,37 @@ class Bottom2(object):
         self.topy = ((self.y) - (self.height / 2) + 13)
         self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
 
+class Maze(object):
+
+    """Docstring for Maze. """
+
+    def __init__(self, image, x ,y ,rectx, recty):
+        """TODO: to be defined1. """
+        self.x = x
+        self.y = y
+        self.image = image
+        self.height = self.image.get_height()
+        self.width = self.image.get_width()
+        self.rectx = rectx
+        self.recty = recty
+
+    def draw(self):
+        screen.blit(self.image, (self.x, self.y))
+        self.topx = ((self.x) - (self.width / 2) + self.rectx)
+        self.topy = ((self.y) - (self.height /2) + self.recty)
+        self.rect = pygame.Rect((self.topx, self.topy), (self.width, self.height))
+        
+
 def main():
     honey = Honey()
     bunny = Bunny()
     goal = Goal()
-    bottom1 = Bottom1()
-    bottom2 = Bottom2()
-    top1 = Top1()
-    top2 = Top2()
-    top3 = Top3()
-    top4 = Top4()
+    bottom1 = Maze(bottom1Img, 0, display_height / 2 + 100, 55, 10)
+    bottom2 = Maze(bottom2Img, 135, display_height / 2 + 165, 155, 13)
+    top1 = Maze(top1Img, 0, display_height / 2 - 80, 100, -20)
+    top2 = Maze(top2Img, 290, display_height/2 -80, 0, 0)
+    top3 = Maze(top3Img, 280, display_height /2 - 9, 54, -20)
+    top4 = Maze(top4Img, 424, 0, -10, 60)
     x, y = 0,0
     xHon, yHon = 0,0
     x_change = 0
